@@ -26,6 +26,7 @@ import {
   DistrictAdminDashboard,
 } from "./pages/AdminDashboards";
 
+import Register from "./components/Register";
 
 function Guard({ children, roles }) {
   const user = useSelector((s) => s.auth.user);
@@ -243,6 +244,11 @@ export default function App() {
       <Route
         path="/login"
         element={<Login />}
+      />
+
+      <Route
+        path="/register"
+        element={<Register/>}
       />
 
 
