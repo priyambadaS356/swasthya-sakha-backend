@@ -23,7 +23,7 @@ export default function Register() {
     gender: "",
     // Health Worker Fields
     healthWorkerId: "",
-    hospitalName: "",
+    facility: "",
     // Doctor Fields
     doctorLicense: "",
     specialization: "",
@@ -51,10 +51,10 @@ export default function Register() {
         if (patientRegMethod === "abha") {
           payload = {
             ...payload,
-            abhaId: formData.abhaAddress, // required: true
-            abhaNumber: formData.abhaNumber, // unique: true
-            name: formData.name, // required: true
-            username: formData.abhaAddress.split("@")[0], // required & unique: strips context domain
+            abhaId: formData.abhaAddress, 
+            abhaNumber: formData.abhaNumber,
+            name: formData.name,
+            username: formData.name, 
             dateOfBirth: formData.dateOfBirth,
             gender: formData.gender,
             qrVerified: true,
@@ -63,8 +63,8 @@ export default function Register() {
           payload = {
             ...payload,
             name: formData.name,
-            username: formData.email, // Standard users sign in with an email handle
-            abhaId: `std_${Date.now()}@abdm`, // Auto-generated string satisfying structural unique index constraints
+            username: formData.name, 
+            abhaId: `std_${Date.now()}@abdm`, 
             abhaNumber: `STD-${Date.now()}`,
             dateOfBirth: formData.dateOfBirth || null,
             gender: formData.gender || "",
@@ -76,16 +76,17 @@ export default function Register() {
           ...payload,
           name: formData.name,
           email: formData.email,
-          username: formData.email,
-          facility: formData.hospitalName,
+          username: formData.name,
+          healthWorkerId: formData.healthWorkerId, 
+          facility: formData.facility,
         };
       } else if (role === "doctor") {
         payload = {
           ...payload,
           name: formData.name,
           email: formData.email,
-          username: formData.email, // Standardizing email handle login for medical staff
-          registrationNo: formData.doctorLicense, // Maps input string cleanly to DB index
+          username: formData.name, 
+          registrationNo: formData.doctorLicense, 
           specialization: formData.specialization,
         };
       }
@@ -329,7 +330,7 @@ export default function Register() {
                 </label>
                 <input
                   type="text"
-                  name="hospitalName"
+                  name="facility"
                   required
                   placeholder="City General Hospital"
                   onChange={handleInputChange}
